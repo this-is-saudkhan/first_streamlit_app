@@ -1,3 +1,5 @@
 
 import streamlit
-streamlit.title("helathy diner")
+streamlit.title("healthy diner")
+streamlit.header("breakfast menu")
+streamlit.text("Omega3 oatmeal")
