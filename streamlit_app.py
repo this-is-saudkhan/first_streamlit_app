@@ -17,13 +17,18 @@ fruits_selected=streamlit.multiselect("Pick some fruits:", list(my_fruit_list.in
 fruits_to_show = my_fruit_list.loc[fruits_selected]
 streamlit.dataframe(fruits_to_show)
 streamlit.header("Fruityvice Fruit Advice!")
-fruit_choice=streamlit.text_input('what fruit?','Kiwi')
-streamlit.write('user ntered',fruit_choice)
-fruityvice_response=requests.get("https://fruityvice.com/api/fruit/"+fruit_choice)
-streamlit.text(fruityvice_response.json())
+try:
+  
+  fruit_choice=streamlit.text_input('what fruit?','Kiwi')
+  if not fruit_choice:
+    streamlit.error("Plz select a fruit")
+  else
+    fruityvice_response=requests.get("https://fruityvice.com/api/fruit/"+fruit_choice)
+    fruityvice_normalised= pandas.json_normalize(fruityvice_response.json())
+    streamlit.dataframe(fruityvice_normalised)
+except URLError as e:
+  streamlit.error()
 
-fruityvice_normalised= pandas.json_normalize(fruityvice_response.json())
-streamlit.dataframe(fruityvice_normalised)
 my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
 my_cur = my_cnx.cursor()
 my_cur.execute("SELECT * from fruit_load_list")
