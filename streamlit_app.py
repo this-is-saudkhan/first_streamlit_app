@@ -3,6 +3,7 @@ import streamlit
 import pandas
 import requests
 import snowflake.connector
+from urllib.error import URLError
 streamlit.title("healthy diner")
 streamlit.header('Breakfast Menu')
 streamlit.text('🥣Omega 3 & Blueberry Oatmeal')
@@ -32,3 +33,13 @@ streamlit.dataframe(my_data_rows)
 add_my_fruit=streamlit.text_input('what fruit?','jackfruit')
 streamlit.write('user entered',add_my_fruit)
 my_cur.execute("insert into fruit_load_list values ('from streamlit')")
+
+streamlit.stop()
+import snowflake.connector
+
+my_cnx= snowflake.conenctor.connect(**strealit.secrets["snowflake"])
+my_cur = my_cnx.cursor()
+my_cur.execute("select * from fruit_load_list")
+my_data_rows = my_cur.fetchall()
+strealit.header("fruit load list contains")
+streamlit.dataframe(my_data_rows)
