@@ -4,6 +4,7 @@ import pandas
 import requests
 import snowflake.connector
 from urllib.error import URLError
+
 streamlit.title("healthy diner")
 streamlit.header('Breakfast Menu')
 streamlit.text('🥣Omega 3 & Blueberry Oatmeal')
@@ -40,14 +41,6 @@ except URLError as e:
 
 
 streamlit.header("fruit list contains:")
-
-
-
-
-import snowflake.connector
-
-
-strealit.header("fruit load list contains")
 
 def get_fruit_load_list():
         with my_cnx.cursor() as my_cur:
